@@ -120,11 +120,6 @@ public class SHA1UserStorageProvider implements UserStorageProvider, UserLookupP
     }
     
     @Override
-    public Set<String> getSupportedCredentialTypes() {
-        return Collections.singleton(CredentialModel.PASSWORD);
-    }
-    
-    @Override
     public void close() {
         DatabaseManager.closeDataSource(config);
     }

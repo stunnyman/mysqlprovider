@@ -8,8 +8,12 @@ import org.keycloak.provider.ProviderConfigProperty;
 import org.keycloak.provider.ProviderConfigurationBuilder;
 import org.keycloak.storage.UserStorageProviderFactory;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
 import java.util.List;
 
+@ApplicationScoped
+@Named("sha1-database-user-storage")
 public class SHA1UserStorageProviderFactory implements UserStorageProviderFactory<SHA1UserStorageProvider> {
     
     public static final String PROVIDER_NAME = "sha1-database-user-storage";
@@ -39,8 +43,7 @@ public class SHA1UserStorageProviderFactory implements UserStorageProviderFactor
                 .property("dbPassword", "Database Password", "Database password for connection", 
                          ProviderConfigProperty.PASSWORD, "", null)
                 .property("driverClassName", "Driver Class Name", "JDBC driver class name", 
-                         ProviderConfigProperty.LIST_TYPE, "org.postgresql.Driver", 
-                         "org.postgresql.Driver", "com.mysql.cj.jdbc.Driver")
+                         ProviderConfigProperty.STRING_TYPE, "com.mysql.cj.jdbc.Driver", null)
                 .property("userQuery", "User Query", "SQL query to retrieve user (use ? for username parameter)", 
                          ProviderConfigProperty.STRING_TYPE, 
                          "SELECT username, password FROM users WHERE username = ?", null)
@@ -110,5 +113,10 @@ public class SHA1UserStorageProviderFactory implements UserStorageProviderFactor
         config.setPasswordColumn(model.get("passwordColumn"));
         config.setUsernameColumn(model.get("usernameColumn"));
         return config;
+    }
+    
+    @Override
+    public int order() {
+        return 0;
     }
 } 
