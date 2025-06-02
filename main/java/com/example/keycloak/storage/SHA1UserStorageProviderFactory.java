@@ -37,20 +37,21 @@ public class SHA1UserStorageProviderFactory implements UserStorageProviderFactor
     public List<ProviderConfigProperty> getConfigProperties() {
         return ProviderConfigurationBuilder.create()
                 .property("jdbcUrl", "JDBC URL", "Database JDBC URL", 
-                         ProviderConfigProperty.STRING_TYPE, "", null)
+                         ProviderConfigProperty.STRING_TYPE, 
+                         "jdbc:mysql://proxysql.proxysql.svc.cluster.local:6033/bapdb?useSSL=false", null)
                 .property("dbUsername", "Database Username", "Database username for connection", 
-                         ProviderConfigProperty.STRING_TYPE, "", null)
+                         ProviderConfigProperty.STRING_TYPE, "perconauser", null)
                 .property("dbPassword", "Database Password", "Database password for connection", 
-                         ProviderConfigProperty.PASSWORD, "", null)
+                         ProviderConfigProperty.PASSWORD, "Perconapass22", null)
                 .property("driverClassName", "Driver Class Name", "JDBC driver class name", 
                          ProviderConfigProperty.STRING_TYPE, "com.mysql.cj.jdbc.Driver", null)
                 .property("userQuery", "User Query", "SQL query to retrieve user (use ? for username parameter)", 
                          ProviderConfigProperty.STRING_TYPE, 
-                         "SELECT username, password FROM users WHERE username = ?", null)
-                .property("usernameColumn", "Username Column", "Name of the username column", 
-                         ProviderConfigProperty.STRING_TYPE, "username", null)
+                         "SELECT email, pw FROM usr WHERE email = ?", null)
+                .property("usernameColumn", "Username Column", "Name of the username/email column", 
+                         ProviderConfigProperty.STRING_TYPE, "email", null)
                 .property("passwordColumn", "Password Column", "Name of the password column (SHA1 hashed)", 
-                         ProviderConfigProperty.STRING_TYPE, "password", null)
+                         ProviderConfigProperty.STRING_TYPE, "pw", null)
                 .build();
     }
     
